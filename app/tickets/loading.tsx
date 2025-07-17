@@ -1,12 +1,11 @@
-import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
 import React from "react";
-import StatusBadge from "../components/StatusBadge";
 import TicketToolbar from "./TicketToolbar";
-import CostumLink from "../components/CostumLink";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-const TicketsPage = async () => {
-  const tickets = await prisma.ticket.findMany();
+const loading = () => {
+  const tickets = [1, 2, 3, 4, 5]; // Placeholder for loading state, replace with actual data fetching logic
   return (
     <div>
       <TicketToolbar />
@@ -21,16 +20,16 @@ const TicketsPage = async () => {
 
         <Table.Body>
           {tickets?.map((ticket) => (
-            <Table.Row key={ticket.id}>
-              <Table.Cell className="cursor-pointer hover:underline">
-                <CostumLink href={`/tickets/${ticket.id}`}>
-                  {ticket.title}
-                </CostumLink>
+            <Table.Row key={ticket}>
+              <Table.Cell>
+                <Skeleton />
               </Table.Cell>
               <Table.Cell>
-                <StatusBadge status={ticket.status} />
+                <Skeleton />
               </Table.Cell>
-              <Table.Cell>{ticket.createdAt.toDateString()}</Table.Cell>
+              <Table.Cell>
+                <Skeleton />
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -39,4 +38,4 @@ const TicketsPage = async () => {
   );
 };
 
-export default TicketsPage;
+export default loading;
