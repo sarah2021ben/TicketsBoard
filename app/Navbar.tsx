@@ -1,9 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import logo from "../public/logo-ticketboard.png";
 import { usePathname } from "next/navigation";
+import logo from "../public/logo-ticketboard.png";
 
 const Navbar = () => {
   // If you want to highlight the active link, you can use pathname

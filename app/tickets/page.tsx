@@ -1,9 +1,7 @@
+import { CostumLink, StatusBadge } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
-import React from "react";
-import StatusBadge from "../components/StatusBadge";
 import TicketToolbar from "./TicketToolbar";
-import CostumLink from "../components/CostumLink";
 
 const TicketsPage = async () => {
   const tickets = await prisma.ticket.findMany();

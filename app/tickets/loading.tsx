@@ -1,8 +1,7 @@
 import { Table } from "@radix-ui/themes";
-import React from "react";
-import TicketToolbar from "./TicketToolbar";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import TicketToolbar from "./TicketToolbar";
 
 const loading = () => {
   const tickets = [1, 2, 3, 4, 5]; // Placeholder for loading state, replace with actual data fetching logic
