@@ -18,7 +18,20 @@ export async function PATCH(request: NextRequest, { params } :{ params:{id:strin
     where: { id: ticket.id },
     data: {
       title: body.title,
-      description: body.description,
+      description: body.description, 
     },
    });
  return NextResponse.json(updatedTicket)}
+
+ export async function DELETE(request: NextRequest, { params } :{ params:{id:string} }){
+  const ticket = await prisma.ticket.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+   })
+   if(!ticket)
+    return NextResponse.json({message: "Ticket not found"}, {status: 404})
+    await prisma.ticket.delete({
+      where: { id: ticket.id },
+    });
+ return NextResponse.json({message: "Ticket deleted successfully"}, {status: 200})}

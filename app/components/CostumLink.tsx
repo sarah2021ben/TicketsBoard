@@ -8,9 +8,9 @@ interface Props {
 
 const CostumLink = ({ href, children }: Props) => {
   return (
-    <NextLink href={href} legacyBehavior passHref>
-      <RadixLink>{children}</RadixLink>
-    </NextLink>
+    <RadixLink asChild>
+      <NextLink href={href}>{children}</NextLink>
+    </RadixLink>
   );
 };
 

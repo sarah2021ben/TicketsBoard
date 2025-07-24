@@ -1,11 +1,10 @@
 import { StatusBadge } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Box, Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
-import Link from "next/link";
+import { Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import { CiEdit } from "react-icons/ci";
 import ReactMarkdown from "react-markdown";
-
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
 interface Props {
   params: {
     id: string;
@@ -13,12 +12,14 @@ interface Props {
 }
 
 const TicketPageDetails = async ({ params }: Props) => {
+  // const router = useRouter();
   const ticket = await prisma.ticket.findUnique({
     where: {
       id: parseInt(params?.id),
     },
   });
   if (!ticket) notFound();
+
   return (
     <Grid columns={{ initial: "1", md: "2" }} gap="5">
       <Box>
@@ -32,10 +33,10 @@ const TicketPageDetails = async ({ params }: Props) => {
         </Card>
       </Box>
       <Box>
-        <Button variant="soft" size="2">
-          <CiEdit />
-          <Link href={`/tickets/${ticket.id}/edit`}>Edit Ticket</Link>
-        </Button>
+        <Flex align="center" mb="4" gap={"2"}>
+          <EditButton ticketId={ticket.id} />
+          <DeleteButton ticketId={ticket.id} />
+        </Flex>
       </Box>
     </Grid>
   );
