@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
+import { getServerSession } from "next-auth";
+import authOptions from "@/app/auth/authOptions";
 interface Props {
   params: {
     id: string;
@@ -13,6 +15,7 @@ interface Props {
 
 const TicketPageDetails = async ({ params }: Props) => {
   // const router = useRouter();
+  const session = await getServerSession(authOptions);
   const ticket = await prisma.ticket.findUnique({
     where: {
       id: parseInt(params?.id),
@@ -32,12 +35,14 @@ const TicketPageDetails = async ({ params }: Props) => {
           <ReactMarkdown>{ticket?.description}</ReactMarkdown>
         </Card>
       </Box>
-      <Box>
-        <Flex align="center" mb="4" gap={"2"}>
-          <EditButton ticketId={ticket.id} />
-          <DeleteButton ticketId={ticket.id} />
-        </Flex>
-      </Box>
+      {session && (
+        <Box>
+          <Flex align="center" mb="4" gap={"2"}>
+            <EditButton ticketId={ticket.id} />
+            <DeleteButton ticketId={ticket.id} />
+          </Flex>
+        </Box>
+      )}
     </Grid>
   );
 };
