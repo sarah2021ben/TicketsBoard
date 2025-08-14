@@ -10,7 +10,6 @@ const Navbar = () => {
   // If you want to highlight the active link, you can use pathname
   const pathname = usePathname();
   const { status, data: session } = useSession();
-  console.log("Session data:", session);
 
   const links = [
     { href: "/", label: "Dashboard" },
