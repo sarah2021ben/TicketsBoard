@@ -3,6 +3,7 @@ import { Status, Ticket } from "@prisma/client";
 import TicketTable from "./TicketTable";
 import TicketToolbar from "./TicketToolbar";
 import Pagination from "@/app/components/Pagination";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: {
@@ -56,6 +57,10 @@ const TicketsPage = async ({ searchParams }: Props) => {
       />
     </div>
   );
+};
+export const metadata: Metadata = {
+  title: "TicketBoard - Ticket List",
+  description: "View the list of your tickets",
 };
 
 export default TicketsPage;

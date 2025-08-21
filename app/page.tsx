@@ -2,6 +2,7 @@ import React from "react";
 import { LatestTickets, TicketSummary, TicketsChart } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Flex, Grid } from "@radix-ui/themes";
+import { Metadata } from "next";
 
 const Home = async () => {
   const open = await prisma.ticket.count({ where: { status: "OPEN" } });
@@ -18,6 +19,10 @@ const Home = async () => {
       <LatestTickets />
     </Grid>
   );
+};
+export const metadata: Metadata = {
+  title: "TicketBoard - Home",
+  description: "View a summary of your tickets",
 };
 
 export default Home;

@@ -8,6 +8,7 @@ import EditButton from "./EditButton";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "./AssigneeSelect";
+import { Metadata } from "next";
 interface Props {
   params: {
     id: string;
@@ -47,6 +48,10 @@ const TicketPageDetails = async ({ params }: Props) => {
       )}
     </Grid>
   );
+};
+export const metadata: Metadata = {
+  title: "Ticket Details",
+  description: "View the details of your tickets",
 };
 
 export default TicketPageDetails;
