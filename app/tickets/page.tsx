@@ -1,38 +1,59 @@
-import { CostumLink, StatusBadge } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Table } from "@radix-ui/themes";
+import { Status, Ticket } from "@prisma/client";
+import TicketTable from "./TicketTable";
 import TicketToolbar from "./TicketToolbar";
+import Pagination from "@/app/components/Pagination";
 
-const TicketsPage = async () => {
-  const tickets = await prisma.ticket.findMany();
+interface Props {
+  searchParams: {
+    status: Status;
+    orderBy?: keyof Ticket;
+    orderDirection?: "asc" | "desc";
+    page: string;
+  };
+}
+
+const TicketsPage = async ({ searchParams }: Props) => {
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const allowedStatuses = ["OPEN", "IN_PROGRESS", "CLOSED"];
+  const allowedOrders = ["asc", "desc"];
+  const allowedOrderKeys: (keyof Ticket)[] = ["title", "status", "createdAt"];
+
+  const page = parseInt(resolvedSearchParams.page) || 1;
+  const pageSize = 10;
+
+  const status = allowedStatuses.includes(resolvedSearchParams.status)
+    ? resolvedSearchParams.status
+    : undefined;
+  const orderBy =
+    allowedOrderKeys.includes(resolvedSearchParams.orderBy!) &&
+    allowedOrders?.includes(resolvedSearchParams.orderDirection!)
+      ? { [resolvedSearchParams.orderBy!]: resolvedSearchParams.orderDirection }
+      : undefined;
+
+  const tickets = await prisma.ticket.findMany({
+    where: {
+      status,
+    },
+    orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
+  const totalItems = await prisma.ticket.findMany({
+    where: {
+      status,
+    },
+  });
+
   return (
     <div>
       <TicketToolbar />
-      <Table.Root variant="surface" className="mt-5" layout={"fixed"}>
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeaderCell>Tickets</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Created</Table.ColumnHeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {tickets?.map((ticket) => (
-            <Table.Row key={ticket.id}>
-              <Table.Cell className="cursor-pointer hover:underline">
-                <CostumLink href={`/tickets/${ticket.id}`}>
-                  {ticket.title}
-                </CostumLink>
-              </Table.Cell>
-              <Table.Cell>
-                <StatusBadge status={ticket.status} />
-              </Table.Cell>
-              <Table.Cell>{ticket.createdAt.toDateString()}</Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+      <TicketTable tickets={tickets} />
+      <Pagination
+        itemCount={totalItems.length}
+        pageSize={pageSize}
+        currentPage={page}
+      />
     </div>
   );
 };
