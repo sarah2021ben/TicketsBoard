@@ -10,17 +10,16 @@ import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "./AssigneeSelect";
 import { Metadata } from "next";
 interface Props {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 const TicketPageDetails = async ({ params }: Props) => {
   // const router = useRouter();
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   const ticket = await prisma.ticket.findUnique({
     where: {
-      id: parseInt(params?.id),
+      id: parseInt(id),
     },
   });
   if (!ticket) notFound();

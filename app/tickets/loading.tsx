@@ -2,11 +2,12 @@ import { Table } from "@radix-ui/themes";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import TicketToolbar from "./TicketToolbar";
+import { Suspense } from "react";
 
 const loading = () => {
   const tickets = [1, 2, 3, 4, 5]; // Placeholder for loading state, replace with actual data fetching logic
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <TicketToolbar />
       <Table.Root variant="surface" className="mt-5" layout={"fixed"}>
         <Table.Header>
@@ -33,7 +34,7 @@ const loading = () => {
           ))}
         </Table.Body>
       </Table.Root>
-    </div>
+    </Suspense>
   );
 };
 

@@ -4,18 +4,19 @@ import TicketTable from "./TicketTable";
 import TicketToolbar from "./TicketToolbar";
 import Pagination from "@/app/components/Pagination";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
-interface Props {
-  searchParams: {
+type Props = {
+  searchParams: Promise<{
     status: Status;
     orderBy?: keyof Ticket;
     orderDirection?: "asc" | "desc";
     page: string;
-  };
-}
+  }>;
+};
 
 const TicketsPage = async ({ searchParams }: Props) => {
-  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const resolvedSearchParams = await searchParams;
   const allowedStatuses = ["OPEN", "IN_PROGRESS", "CLOSED"];
   const allowedOrders = ["asc", "desc"];
   const allowedOrderKeys: (keyof Ticket)[] = ["title", "status", "createdAt"];
@@ -47,7 +48,7 @@ const TicketsPage = async ({ searchParams }: Props) => {
   });
 
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <TicketToolbar />
       <TicketTable tickets={tickets} />
       <Pagination
@@ -55,7 +56,7 @@ const TicketsPage = async ({ searchParams }: Props) => {
         pageSize={pageSize}
         currentPage={page}
       />
-    </div>
+    </Suspense>
   );
 };
 export const metadata: Metadata = {

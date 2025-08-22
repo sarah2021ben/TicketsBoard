@@ -3,6 +3,7 @@ import { Status } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 const TicketStatusFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,20 +18,22 @@ const TicketStatusFilter = () => {
     router.push(`/tickets?${params.toString()}`);
   };
   return (
-    <Select.Root
-      onValueChange={handleStatusChange}
-      defaultValue={searchParams.get("status") || ""}
-    >
-      <Select.Trigger placeholder="Filter by status" />
-      <Select.Content>
-        <Select.Item value="ALL">All</Select.Item>
-        {statusOptions.map((option) => (
-          <Select.Item key={option.label} value={option?.value}>
-            {option.label}
-          </Select.Item>
-        ))}
-      </Select.Content>
-    </Select.Root>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Select.Root
+        onValueChange={handleStatusChange}
+        defaultValue={searchParams.get("status") || ""}
+      >
+        <Select.Trigger placeholder="Filter by status" />
+        <Select.Content>
+          <Select.Item value="ALL">All</Select.Item>
+          {statusOptions.map((option) => (
+            <Select.Item key={option.label} value={option?.value}>
+              {option.label}
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+    </Suspense>
   );
 };
 
