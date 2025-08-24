@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎟️ Ticket Board
 
-## Getting Started
+**Ticket Board** is a straightforward web app to manage tickets (bugs): create, view, update, and delete items with optional filtering and sorting. It’s built with modern React tooling (Next.js 15 + React 19), typed with TypeScript, and backed by PostgreSQL via Prisma.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Framework & UI**: Next.js 15 (App Router, Turbopack), React 19, TypeScript 5, Tailwind CSS 4, Radix UI (themes & icons)
+* **Forms & Validation**: React Hook Form, Zod, @hookform/resolvers
+* **Data & API**: TanStack React Query v5, Axios
+* **Auth**: NextAuth.js (with `@next-auth/prisma-adapter`)
+* **Database**: PostgreSQL (e.g., Supabase) with Prisma 6
+* **Content & UX**: SimpleMDE (`react-simplemde-editor` / `easymde`), React Markdown, Recharts, react-hot-toast, react-loading-skeleton
+* **Tooling**: ESLint 9, Tailwind Typography plugin
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> ℹ️ Note: Ensure `@prisma/client` is installed as a **runtime dependency** (in `dependencies`) for production/serverless deployments.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+🔗 Live Demo & Screenshots
 
-To learn more about Next.js, take a look at the following resources:
+Live App: https://tickets-board.vercel.app/
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ✨ Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* ➕ **Create** tickets (title, description/markdown, status)
+* 👀 **View** tickets list with loading skeletons
+* ✏️ **Edit** ticket details with form validation (RHF + Zod)
+* ❌ **Delete** tickets
+* 🔎 **Filter/Sort** tickets by name, status or creation date
+* ⏱️ **Real‑time‑like UX** with React Query (instant updates, cache, optimistic patterns)
+* 📝 **Markdown** support for descriptions (SimpleMDE + React Markdown)
+* 📊 **Charts/Dashboards** with Recharts
+* 🔔 **Toasts** for feedback and errors
+* 🌓 **Accessible UI** with Radix + Tailwind
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+📸 Screenshots
+
+
