@@ -18,7 +18,7 @@
 
 ---
 
-🔗 Live Demo & Screenshots
+## 🔗 Live Demo & Screenshots
 
 Live App: https://tickets-board.vercel.app/
 
@@ -40,6 +40,6 @@ Live App: https://tickets-board.vercel.app/
 
 ---
 
-📸 Screenshots
+## 📸 Screenshots
 
-
+![TicketBoard Screenshot](public/screenshot-ticket.png)
